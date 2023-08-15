@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./pages/business/root";
+import { useEffect } from "react";
+import {useDispatch } from "react-redux";
+import BusinessSignUp from "./pages/business/business-signup";
+import { fetchCities } from "./store/citySlice";
+import { fetchCategories } from "./store/categorySlice";
+import { fetchServices } from "./store/serviceSlice";
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <BusinessSignUp />,
+        }
+                
+]);
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch=useDispatch()
+    useEffect(() => {
+        dispatch(fetchCities());
+        dispatch(fetchCategories())
+        dispatch(fetchServices())
+    }, [dispatch]);
+    return (
+            <RouterProvider router={router}></RouterProvider>
+    );
 }
 
 export default App;
